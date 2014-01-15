@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Menu;
+import android.view.View;
 
 import com.gnedwards.bbc.Orientation;
 import com.gnedwards.bbc.fragments.StoryViewPagerFrag;
@@ -16,11 +16,10 @@ import com.gnedwards.mostpopular.R;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_story);
-		
+		findViewById(R.id.progressBar).setVisibility(View.INVISIBLE);
 		StoryViewPagerFrag storyViewPagerFrag = new StoryViewPagerFrag();
 		FragmentTransaction storyViewPagerFragTrans = getStorySupportFragmentManager().beginTransaction();
-		storyViewPagerFragTrans.replace(R.id.storyActivity, storyViewPagerFrag);
+		storyViewPagerFragTrans.replace(R.id.StoryHeaders, storyViewPagerFrag);
 		int position = getIntent().getIntExtra("position",0);
 		String tabName = getIntent().getStringExtra("tabName");
 		Bundle args = new Bundle();
@@ -34,14 +33,6 @@ import com.gnedwards.mostpopular.R;
 			startActivity(MainActivity);
 		}
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.story, menu);
-		return true;
-	}
-
 	@Override
 	public FragmentManager getStorySupportFragmentManager() {
 		return getSupportFragmentManager();

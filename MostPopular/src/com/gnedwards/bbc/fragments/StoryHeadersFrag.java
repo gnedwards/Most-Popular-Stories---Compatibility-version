@@ -113,6 +113,7 @@ public class StoryHeadersFrag extends Fragment implements OnItemClickListener{
 			storyActivity.putExtra("position", position);
 			startActivity(storyActivity);		
 			Log.i(TAG,"launch new activity (?)");
+			
 		} else {
 		//otherwise add it to the screen
 			StoryViewPagerFrag storyViewPagerFrag = new StoryViewPagerFrag();
