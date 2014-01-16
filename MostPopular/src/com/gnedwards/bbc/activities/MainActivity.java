@@ -9,11 +9,10 @@ import android.widget.ProgressBar;
 import com.gnedwards.bbc.GlobalData;
 import com.gnedwards.bbc.fragments.LoadingFrag;
 import com.gnedwards.bbc.fragments.StoryHeadersFrag;
-import com.gnedwards.bbc.interfaces.Communicator;
 import com.gnedwards.bbc.startup.DownloadAsync;
 import com.gnedwards.mostpopular.R;
 
-public class MainActivity extends ActionBarSetupActivity implements Communicator, TabListener,
+public class MainActivity extends ActionBarSetupActivity implements  TabListener, /*Communicator, */
 DownloadAsync.Callback{
 	
 	private FragmentManager fragMan;
@@ -23,7 +22,7 @@ DownloadAsync.Callback{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	
+		//set progress bar to current global progress following possible configuration change
 		GlobalData.progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		GlobalData.progressBar.setMax(GlobalData.totalToDownload);
 		GlobalData.progressBar.setProgress(GlobalData.progress);
@@ -31,6 +30,7 @@ DownloadAsync.Callback{
 		GlobalData.mainActivity = this;
 		
 		fragMan = getSupportFragmentManager();
+		//start task to download data and retain it through configuration changes
 		loadingFrag = (LoadingFrag) fragMan.findFragmentByTag("loadingFrag");
 		if (loadingFrag == null) {
 			loadingFrag = new LoadingFrag() {
@@ -48,10 +48,6 @@ DownloadAsync.Callback{
 			fragTrans.commitAllowingStateLoss();
 
 		}
-	}
-	@Override
-	public FragmentManager getStorySupportFragmentManager() {
-		return getSupportFragmentManager();
 	}
 
 	@Override

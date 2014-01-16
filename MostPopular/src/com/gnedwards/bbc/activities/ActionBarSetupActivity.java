@@ -29,18 +29,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gnedwards.bbc.fragments.StoryHeadersFrag;
+import com.gnedwards.bbc.interfaces.Communicator;
 import com.gnedwards.mostpopular.R;
 
-public class ActionBarSetupActivity extends ActionBarActivity implements TabListener{
+public class ActionBarSetupActivity extends ActionBarActivity implements TabListener, Communicator {
 	private int noOfTabs = 2;
 	private ActionBarDrawerToggle drawerToggle;
 	private String tabName;
-	private FragmentManager fragMan;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		//set up tabs
 		ActionBar titleBar = getSupportActionBar();
 		titleBar.setDisplayHomeAsUpEnabled(true); 
 		ActionBar.Tab[] tabs = new ActionBar.Tab[noOfTabs];
@@ -49,13 +50,13 @@ public class ActionBarSetupActivity extends ActionBarActivity implements TabList
 			tabs[i] = titleBar.newTab();
 			tabs[i].setText(titles[i]);
 			tabs[i].setTabListener(this);
-			titleBar.addTab(tabs[i]);
+			 titleBar.addTab(tabs[i]);
 		}
 		titleBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		titleBar.setTitle(getApplicationInfo().labelRes);
 		titleBar.setSubtitle("BBC News");
-		
-
+			
+		//set up navigator
 		DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		final LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		ListView lvNewsProviders = (ListView) drawerLayout.findViewById(R.id.lvNewsProviders);
@@ -80,7 +81,7 @@ public class ActionBarSetupActivity extends ActionBarActivity implements TabList
 				int id = newsProvidersToDrawable.get(newsProviders.get(position));
 				Drawable dr = getResources().getDrawable(id);
 				Bitmap bitmap = ((BitmapDrawable) dr).getBitmap();
-
+				//setting each icon to the same small size
 				Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 40, 40, true));
 				d.setBounds(0,40,40,0);
 				tvNewsProviderItem.setCompoundDrawablesWithIntrinsicBounds(d,null,null,null);
@@ -116,8 +117,9 @@ public class ActionBarSetupActivity extends ActionBarActivity implements TabList
 
 	@Override
 	public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
+		//add list of stories to screen
 		setTabName((String) arg0.getText());
-		fragMan = getSupportFragmentManager();
+		FragmentManager fragMan = getSupportFragmentManager();
 		StoryHeadersFrag storyHeadersFrag = new StoryHeadersFrag();
 		Bundle args = new Bundle();
 		args.putString("tabName", getTabName());
@@ -132,6 +134,11 @@ public class ActionBarSetupActivity extends ActionBarActivity implements TabList
 		
 	}
 
+	@Override
+	public FragmentManager getStorySupportFragmentManager() {
+		return getSupportFragmentManager();
+	}
+	
 	@Override
 	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
 		// Do nothing
