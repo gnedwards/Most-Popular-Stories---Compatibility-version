@@ -3,7 +3,7 @@ Most-Popular-Stories---Compatibility-version
 
 Android Application. For use with devices with Android 2.1 (Eclair), API 7, or higher.
 
-I have included the  android-support-v7-appcompat library project in the repo. This must be imported as well as the application itself. You should then run the Most Popular project as normal as an Android Application
+I have included the  android-support-v7-appcompat library project in the repo. This must be imported as well as the application itself, and you must have Android SDK platform ADP 19 installed. You should then run the Most Popular project as normal as an Android Application. 
 The dependencies between the projects should be maintained when the repository is cloned. 
 
 Known Bug: If there is no internet connection on device, the app will crash. 
